@@ -1,0 +1,64 @@
+<!-- ベーステンプレートを適用する-->
+{% extends 'base.html' %}
+<!-- ヘッダー情報のページタイトルを設定する-->
+{% block title %}Contact{% endblock %}
+
+    {% block contents %}
+    <!-- Bootstrapのグリッドシステム-->
+    <div class="container">
+        <!-- 行を配置-->
+        <div class="row">
+            <!-- 列の上下パティングはpy-4-->
+            <div class="col py-4">
+                <hr>
+                <h3>問い合わせますか？</h3>
+                <p>
+                    下記の内容を入力して送信ボタンを押してください。
+                </p>
+                <br>
+
+                    {% if messages %}
+                    <!-- 箇条書きのスタイルを無効にした<ul>タグでメッセージを出力 -->
+                    <ul class="list-unstyled" style="list-style: none;">
+                        <!-- forでmessageを取り出す -->
+                        {% for message in messages %}
+                        <!-- message.tagsが存在する場合はclass属性にCSSのクラスを設定 -->
+                        <li {%if message.tags %} class="{{ message.tags }}" {% endif %}>
+                            <!-- messageに格納されているメッセージを出力 -->
+                            {{ message }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <!-- 以下、フォームを表示するためのコード -->
+                    <div class="my-5">
+                        <!-- method="post"を追加 -->
+                        <form method="post">
+                            <!-- CSRF対策のためのテンプレートタグ -->
+                            {% csrf_token %}
+                            <!-- formで定義されているフィールドの値を取り出す -->
+                            {% for field in form %}
+                            <div class="form-floating">
+                                <div class="form-group floating-label-form-group controls">
+                                    <!-- <label>タグを生成 -->
+                                    {{ field.label_tag}}
+                                    {{ field }}
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <!-- forループここまで -->
+                            {% endfor %}
+                    <!-- 送信ボタン-->
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="sendMessageButton">送信</button>
+                </form>
+                <br>
+                <!-- トップページへのリンク-->
+                <a href="{% url 'score:index' %}">Student Score</a>
+                <hr>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,39 @@
+<!-- ベーステンプレートを適用する -->
+{% extends 'base.html' %}
+<!-- ヘッダー情報のページタイトルを設定する -->
+{% block title %}Post{% endblock %}
+
+      {% block contents %}
+      <!-- Bootstrapのグリッドシステム -->
+      <br>
+      <div class="container">
+        <!-- 行を配置 -->
+        <div class="row">
+          <!-- 列の左右に余白offset-2を入れる -->
+          <div class="col offset-2">
+            <!-- ファイルをアップロードする場合は
+                 enctype="multipart/form-data"が必要 -->
+            <form method="POST"
+                  enctype="multipart/form-data">
+              {% csrf_token %}
+              <table>
+                <tr>
+                  <th>科目</th>
+                  <td>{{ form.subject }}</td>
+                </tr>
+                <tr>
+                  <th>点数</th>
+                  <td>{{ form.score }}</td>
+                </tr>
+                <tr>
+                  <th>memo</th>
+                  <td>{{ form.memo }}</td>
+                </tr>
+              </table>
+              <hr>
+              <button type="submit">点数を記録</button>
+            </form>        
+          </dv>
+        </dv>
+      </dv>
+      {% endblock %}
